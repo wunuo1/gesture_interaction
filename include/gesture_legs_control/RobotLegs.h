@@ -149,11 +149,16 @@ class RobotLegs
         // 复合动作
         void shakeEars(int speed = 100);
         
-        //灯光控制
+        // 灯光控制
         void flashingLight(int speed = 100);
+
+        // 舵机控制接口
+        void servoControl(int index, float duty);
 
         // 状态查询
         std::string getCurrentPose() const;
+
+
         
     private:
         // 引脚配置

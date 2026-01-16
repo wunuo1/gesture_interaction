@@ -37,6 +37,12 @@ add_executable(gesture_legs_control
 
 )
 
+add_executable(function_call_control 
+    ./src/fc_call_node.cpp
+    ./src/RobotLegs.cpp
+
+)
+
 target_link_libraries(gesture_legs_control
     pthread  # wiringPi通常需要pthread库
     ${Python3_LIBRARIES}
@@ -47,11 +53,20 @@ ament_target_dependencies(gesture_legs_control            #添加节点的依赖
     ai_msgs
 )				
 
+ament_target_dependencies(function_call_control            #添加节点的依赖
+    rclcpp
+    std_msgs
+)		
+
 install(DIRECTORY
 ${PROJECT_SOURCE_DIR}/launch/
 DESTINATION share/${PROJECT_NAME}/launch)
 
 install(TARGETS
         gesture_legs_control
+        DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS
+        function_call_control
         DESTINATION lib/${PROJECT_NAME})
 

@@ -37,7 +37,7 @@ class GestureControlNode : public rclcpp::Node
        
         int gesture_value_ = 0;
         size_t queue_len_limit_ = 25;
-        bool need_exchange_ = false;
+        bool need_exchange_ = true;
         std::vector<int> gesture_value_vector;
         std::queue<int> gesture_value_queue;
         GestureCtrlType gesture_ctrl_type_ = GestureCtrlType::None;

@@ -32,6 +32,20 @@ bool RobotLegs::initializeLegs()
     return true;
 }
 
+void RobotLegs::servoControl(int index, float duty){
+    switch(index){
+        case 0:
+            pwmController_.setDutyCycle(0, LEFT_INITIAL_POSITON + duty);
+            break;
+        case 1:
+            pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON + duty);
+            break;
+        default:
+            std::cerr <<"Only 0 and 1 are supported"<< std::endl;
+    }
+    
+
+}
 
 void RobotLegs::liftLeftLeg(int speed) 
 {
