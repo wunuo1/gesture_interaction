@@ -4,12 +4,10 @@
 void FcCallNode::LeftControl(int angle) {
   
   robotLegs_ptr_->servoControl(0, 0 - ((angle - 30) / 15.0));
-  std::cout << "左手控制: " << angle << std::endl;
 }
 
 void FcCallNode::RightControl(int angle) {
   robotLegs_ptr_->servoControl(1, 0 + ((angle - 30) / 15.0));
-  std::cout << "右手控制: " << angle << std::endl;
 }
 
 FcCallNode::FcCallNode(): rclcpp::Node("fc_call_node"){
@@ -24,7 +22,6 @@ FcCallNode::FcCallNode(): rclcpp::Node("fc_call_node"){
 }
 
 void FcCallNode::FcMsgCallback(const std_msgs::msg::String::ConstSharedPtr msg){
-  std::cout<<msg->data<<std::endl;
   auto input = msg->data;
   if (input.size() < 2 || input.front() != '{' || input.back() != '}') {
       return;
@@ -38,8 +35,6 @@ void FcCallNode::FcMsgCallback(const std_msgs::msg::String::ConstSharedPtr msg){
       auto fun_param = std::stoi((*it)[2].str());
       if (func_map_.count(fun_name)) {
           func_map_[fun_name](fun_param);  // ✅ 使用变量调用函数
-      } else {
-          std::cout << "未知函数: " << fun_name << std::endl;
       }
   }
 }

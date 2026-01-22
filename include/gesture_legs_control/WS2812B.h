@@ -1,3 +1,6 @@
+#ifndef WS2812B_H
+#define WS2812B_H
+
 #include <iostream>
 #include <vector>
 #include <unistd.h>     // usleep
@@ -88,3 +91,5 @@ private:
         }
     }
 };
+
+#endif //WS2812B_H

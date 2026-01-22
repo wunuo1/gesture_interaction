@@ -54,7 +54,7 @@ void RobotLegs::liftLeftLeg(int speed)
     if(robot_legs_state != robotLegsState::LiftLeft){
         pwmController_.setDutyCycle(0, LEFT_INITIAL_POSITON - 5.0);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        robot_legs_state = robotLegsState::LiftLeft; // 更新状态为抬起左腿
+        robot_legs_state = robotLegsState::LiftLeft;
     }
 
 }
@@ -67,7 +67,7 @@ void RobotLegs::liftRightLeg(int speed)
     if(robot_legs_state != robotLegsState::LiftRight){
         pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON + 5.0);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        robot_legs_state = robotLegsState::LiftRight; // 更新状态为抬起右腿
+        robot_legs_state = robotLegsState::LiftRight;
     }
 
 
@@ -122,7 +122,7 @@ void RobotLegs::relaxLegs()
     }
     pwmController_.setDutyCycle(0, LEFT_INITIAL_POSITON);
     pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON);
-    robot_legs_state = robotLegsState::Relaxed; // 更新状态为放松
+    robot_legs_state = robotLegsState::Relaxed;
 }
 
 
@@ -159,5 +159,5 @@ void RobotLegs::shakeEars(int speed)
         pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON + 3.0);
         std::this_thread::sleep_for(std::chrono::milliseconds(60));
     }  
-    robot_legs_state = robotLegsState::ShakeEars; // 更新状态为抖动耳朵
+    robot_legs_state = robotLegsState::ShakeEars;
 }
