@@ -11,7 +11,7 @@ void FcCallNode::RightControl(int angle) {
 }
 
 FcCallNode::FcCallNode(): rclcpp::Node("fc_call_node"){
-  robotLegs_ptr_ = std::make_unique<RobotLegs>(LEFT_LEG_PIN, RIGHT_LEG_PIN);
+  robotLegs_ptr_ = std::make_unique<ActuatorsControl>(LEFT_LEG_PIN, RIGHT_LEG_PIN);
   robotLegs_ptr_->initializeLegs();
   func_map_["left_control"]  = [this](int angle){ this->LeftControl(angle) ;};
   func_map_["right_control"] = [this](int angle){ this->RightControl(angle); };

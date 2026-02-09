@@ -10,7 +10,7 @@
 #include "ai_msgs/msg/perception_targets.hpp"
 
 
-#include "RobotLegs.h"
+#include "actuators_control.h"
 
 
 enum class GestureCtrlType 
@@ -46,8 +46,8 @@ class GestureControlNode : public rclcpp::Node
         std::string ai_msg_sub_topic_name_ = "/tros_perc_fusion";
         rclcpp::Subscription<ai_msgs::msg::PerceptionTargets>::SharedPtr smart_subscription_ = nullptr;
 
-        std::unique_ptr<RobotLegs> robotLegs_ptr_ = nullptr;
-        // RobotLegs robotLegs;
+        std::unique_ptr<ActuatorsControl> robotLegs_ptr_ = nullptr;
+        // ActuatorsControl robotLegs;
 
 
         std::thread gesture_control_thread_;

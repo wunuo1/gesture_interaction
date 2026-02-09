@@ -12,6 +12,7 @@
 
   <depend>rclcpp</depend>
   <depend>ai_msgs</depend>
+  <depend>lighting_control</depend>
 
   <exec_depend>hand_gesture_detection</exec_depend>
 

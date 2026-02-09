@@ -17,9 +17,9 @@ GestureControlNode::GestureControlNode(): Node("GestureControlNode")
     need_exchange_ = this->get_parameter("need_exchange").as_bool();
     
     if(need_exchange_ == false){
-        robotLegs_ptr_ = std::make_unique<RobotLegs>(LEFT_LEG_PIN, RIGHT_LEG_PIN);
+        robotLegs_ptr_ = std::make_unique<ActuatorsControl>(LEFT_LEG_PIN, RIGHT_LEG_PIN);
     } else {
-        robotLegs_ptr_ = std::make_unique<RobotLegs>(RIGHT_LEG_PIN, LEFT_LEG_PIN);
+        robotLegs_ptr_ = std::make_unique<ActuatorsControl>(RIGHT_LEG_PIN, LEFT_LEG_PIN);
     }
     
 

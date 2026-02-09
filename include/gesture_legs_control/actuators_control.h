@@ -3,14 +3,14 @@
 
 #include <vector>
 #include <string>
-#include "WS2812B.h"
 #include <Python.h>
 
+#include "lighting_control/ws2812b.h"
 /* Macro config define */
 #define RIGHT_LEG_PIN  33U
 #define LEFT_LEG_PIN   32U
 
-enum class robotLegsState 
+enum class ActuatorsState 
 {
     NONE = -1, // 未初始化
     Relaxed = 0,   // 放松
@@ -20,7 +20,7 @@ enum class robotLegsState
     ShakeLeft = 4, // 抖动左腿
     ShakeRight = 5,// 抖动右腿
     ShakeEars = 6, // 抖动耳朵
-    FlashingLight = 7     // 推起
+    FlashingLight = 7     // 灯光闪烁
 };
 
 
@@ -126,12 +126,12 @@ private:
     std::vector<PyObject*> pwmObjects;
 };
 
-class RobotLegs 
+class ActuatorsControl 
 {
     public:
         // 构造函数和析构函数
-        RobotLegs(int leftLegPin, int rightLegPin);
-        ~RobotLegs();
+        ActuatorsControl(int leftLegPin, int rightLegPin);
+        ~ActuatorsControl();
         
         // 初始化函数
         bool initializeLegs();
@@ -164,7 +164,7 @@ class RobotLegs
         // 引脚配置
         int leftLegPin;
         int rightLegPin;
-        robotLegsState robot_legs_state = robotLegsState::NONE;   
+        ActuatorsState robot_legs_state = ActuatorsState::NONE;   
         WS2812B strip;
         HobotPWM pwmController_;
 };

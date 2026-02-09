@@ -11,7 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(ai_msgs REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
-
+find_package(lighting_control REQUIRED)
 
 
 if(BUILD_TESTING)
@@ -28,19 +28,17 @@ endif()
 
 ament_package()
 
-include_directories(./include/gesture_legs_control/ ${Python3_INCLUDE_DIRS})
+include_directories(./include/gesture_legs_control/ ${Python3_INCLUDE_DIRS} ${lighting_control_INCLUDE_DIRS})
 
 add_executable(gesture_legs_control 
     ./src/main.cpp
     ./src/gesture_control_node.cpp
-    ./src/RobotLegs.cpp
-
+    ./src/actuators_control.cpp
 )
 
 add_executable(function_call_control 
     ./src/fc_call_node.cpp
-    ./src/RobotLegs.cpp
-
+    ./src/actuators_control.cpp
 )
 
 target_link_libraries(gesture_legs_control

@@ -1,4 +1,4 @@
-#include "RobotLegs.h"
+#include "actuators_control.h"
 #include <thread>
 #include <chrono>
 #include <iostream>
@@ -11,14 +11,14 @@ static int high_edge_time = 0;   // uint :0.1ms
 static int cycle_time     = 200; // uint :0.1ms
 
 
-RobotLegs::RobotLegs(int leftLegPin, int rightLegPin) 
+ActuatorsControl::ActuatorsControl(int leftLegPin, int rightLegPin) 
     : leftLegPin(leftLegPin), rightLegPin(rightLegPin),strip(4)
 {}
 
-RobotLegs::~RobotLegs() 
+ActuatorsControl::~ActuatorsControl() 
 {}
 
-bool RobotLegs::initializeLegs()
+bool ActuatorsControl::initializeLegs()
 {
 
     pwmController_.addPWM(leftLegPin, 50);
@@ -32,7 +32,7 @@ bool RobotLegs::initializeLegs()
     return true;
 }
 
-void RobotLegs::servoControl(int index, float duty){
+void ActuatorsControl::servoControl(int index, float duty){
     switch(index){
         case 0:
             pwmController_.setDutyCycle(0, LEFT_INITIAL_POSITON + duty);
@@ -47,87 +47,87 @@ void RobotLegs::servoControl(int index, float duty){
 
 }
 
-void RobotLegs::liftLeftLeg(int speed) 
+void ActuatorsControl::liftLeftLeg(int speed) 
 {
-    if( robot_legs_state != robotLegsState::Relaxed){};
+    if( robot_legs_state != ActuatorsState::Relaxed){};
 
-    if(robot_legs_state != robotLegsState::LiftLeft){
+    if(robot_legs_state != ActuatorsState::LiftLeft){
         pwmController_.setDutyCycle(0, LEFT_INITIAL_POSITON - 5.0);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        robot_legs_state = robotLegsState::LiftLeft;
+        robot_legs_state = ActuatorsState::LiftLeft;
     }
 
 }
 
-void RobotLegs::liftRightLeg(int speed) 
+void ActuatorsControl::liftRightLeg(int speed) 
 {
 
-    if(robot_legs_state != robotLegsState::Relaxed){};
+    if(robot_legs_state != ActuatorsState::Relaxed){};
 
-    if(robot_legs_state != robotLegsState::LiftRight){
+    if(robot_legs_state != ActuatorsState::LiftRight){
         pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON + 5.0);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        robot_legs_state = robotLegsState::LiftRight;
+        robot_legs_state = ActuatorsState::LiftRight;
     }
 
 
 }
 
-void RobotLegs::lowerLeftLeg(int speed) 
+void ActuatorsControl::lowerLeftLeg(int speed) 
 {
 
-    if( robot_legs_state != robotLegsState::Relaxed){};
-    if(robot_legs_state != robotLegsState::LiftRight){
+    if( robot_legs_state != ActuatorsState::Relaxed){};
+    if(robot_legs_state != ActuatorsState::LiftRight){
         pwmController_.setDutyCycle(0, LEFT_INITIAL_POSITON);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 
 }
 
-void RobotLegs::lowerRightLeg(int speed) 
+void ActuatorsControl::lowerRightLeg(int speed) 
 {
-    if( robot_legs_state != robotLegsState::Relaxed){};
+    if( robot_legs_state != ActuatorsState::Relaxed){};
 
-    if(robot_legs_state != robotLegsState::LiftLeft){
+    if(robot_legs_state != ActuatorsState::LiftLeft){
         pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON); 
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 
 }
 
-void RobotLegs::standStraight() 
+void ActuatorsControl::standStraight() 
 {
     
-    if (robot_legs_state != robotLegsState::Stand){
+    if (robot_legs_state != ActuatorsState::Stand){
         pwmController_.setDutyCycle(0, LEFT_INITIAL_POSITON);
         pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
         pwmController_.setDutyCycle(0, LEFT_INITIAL_POSITON + 2.0);
         pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON - 2.0);
-        robot_legs_state = robotLegsState::Stand;
+        robot_legs_state = ActuatorsState::Stand;
     }
 
 }
 
 
-void RobotLegs::relaxLegs() 
+void ActuatorsControl::relaxLegs() 
 {
-    if (robot_legs_state == robotLegsState::Stand){
+    if (robot_legs_state == ActuatorsState::Stand){
         for(int i = 0; i < 8; i++){
             pwmController_.setDutyCycle(0, LEFT_INITIAL_POSITON + 2.0 - i * 0.25);
             pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON - 2.0 + i * 0.25);
             std::this_thread::sleep_for(std::chrono::milliseconds(35));
         }
-        robot_legs_state = robotLegsState::Relaxed;
+        robot_legs_state = ActuatorsState::Relaxed;
     }
     pwmController_.setDutyCycle(0, LEFT_INITIAL_POSITON);
     pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON);
-    robot_legs_state = robotLegsState::Relaxed;
+    robot_legs_state = ActuatorsState::Relaxed;
 }
 
 
 
-void RobotLegs::flashingLight(int speed) 
+void ActuatorsControl::flashingLight(int speed) 
 {
 
     relaxLegs();
@@ -136,14 +136,14 @@ void RobotLegs::flashingLight(int speed)
     strip.set_all_same_color(0, 255, 0);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
-    robot_legs_state = robotLegsState::FlashingLight;
+    robot_legs_state = ActuatorsState::FlashingLight;
 
 }
 
 
-void RobotLegs::shakeEars(int speed) 
+void ActuatorsControl::shakeEars(int speed) 
 {
-    if( robot_legs_state != robotLegsState::Relaxed){};
+    if( robot_legs_state != ActuatorsState::Relaxed){};
 
     pwmController_.setDutyCycle(0, LEFT_INITIAL_POSITON - 3.0);
     pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON + 3.0);
@@ -159,5 +159,5 @@ void RobotLegs::shakeEars(int speed)
         pwmController_.setDutyCycle(1, RIGHT_INITIAL_POSITON + 3.0);
         std::this_thread::sleep_for(std::chrono::milliseconds(60));
     }  
-    robot_legs_state = robotLegsState::ShakeEars;
+    robot_legs_state = ActuatorsState::ShakeEars;
 }

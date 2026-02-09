@@ -7,7 +7,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
-#include "RobotLegs.h"
+#include "actuators_control.h"
 
 #define RIGHT_LEG_PIN  32U
 #define LEFT_LEG_PIN   33U
@@ -18,7 +18,7 @@ public:
     ~FcCallNode(){};
 private:
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr fc_msg_subscription_ = nullptr;
-    std::unique_ptr<RobotLegs> robotLegs_ptr_ = nullptr;
+    std::unique_ptr<ActuatorsControl> robotLegs_ptr_ = nullptr;
     void FcMsgCallback(const std_msgs::msg::String::ConstSharedPtr msg);
     void RightControl(int angle);
     void LeftControl(int angle);
