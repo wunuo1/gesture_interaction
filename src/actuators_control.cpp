@@ -12,7 +12,7 @@ static int cycle_time     = 200; // uint :0.1ms
 
 
 ActuatorsControl::ActuatorsControl(int leftLegPin, int rightLegPin) 
-    : leftLegPin(leftLegPin), rightLegPin(rightLegPin),strip(4)
+    : leftLegPin(leftLegPin), rightLegPin(rightLegPin),lamp_(4)
 {}
 
 ActuatorsControl::~ActuatorsControl() 
@@ -131,9 +131,9 @@ void ActuatorsControl::flashingLight(int speed)
 {
 
     relaxLegs();
-    strip.clear();
+    lamp_.clear();
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    strip.set_all_same_color(0, 255, 0);
+    lamp_.set_all_same_color(0, 255, 0);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
     robot_legs_state = ActuatorsState::FlashingLight;

@@ -1,8 +1,8 @@
 # 功能介绍
 
-gesture_legs_control package是MagicBox用于控制舵机的功能包，实现功能如下：
+gesture_interaction package是MagicBox用于控制舵机的功能包，实现功能如下：
 
-- gesture_legs_control：接收手势消息，实现对应动作
+- gesture_interaction：接收手势消息，实现对应动作
 
 - function_call_control：接收大模型输出的指令，控制对应舵机，需配合大模型使用
 
@@ -12,14 +12,14 @@ gesture_legs_control package是MagicBox用于控制舵机的功能包，实现�
 
 ```shell
 cd /userdata/MagicBox/app/ros_ws
-colcon build --packages-select gesture_legs_control
+colcon build --packages-select gesture_interaction
 ```
 # 运行
 
 
 ```shell
 cd /userdata/MagicBox
-ros2 launch gesture_legs_control gesture_legs_control.launch.py
+ros2 launch gesture_interaction gesture_interaction.launch.py
 ```
 
 # 手势说明

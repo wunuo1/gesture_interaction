@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(gesture_legs_control)
+project(gesture_interaction)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -12,7 +12,7 @@ find_package(std_msgs REQUIRED)
 find_package(ai_msgs REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 find_package(lighting_control REQUIRED)
-
+find_package(servo_control REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -28,9 +28,9 @@ endif()
 
 ament_package()
 
-include_directories(./include/gesture_legs_control/ ${Python3_INCLUDE_DIRS} ${lighting_control_INCLUDE_DIRS})
+include_directories(./include/gesture_interaction/ ${Python3_INCLUDE_DIRS})
 
-add_executable(gesture_legs_control 
+add_executable(gesture_interaction 
     ./src/main.cpp
     ./src/gesture_control_node.cpp
     ./src/actuators_control.cpp
@@ -41,19 +41,23 @@ add_executable(function_call_control
     ./src/actuators_control.cpp
 )
 
-target_link_libraries(gesture_legs_control
-    pthread  # wiringPi通常需要pthread库
+target_link_libraries(gesture_interaction
+    pthread
     ${Python3_LIBRARIES}
 )
 
-ament_target_dependencies(gesture_legs_control            #添加节点的依赖
+ament_target_dependencies(gesture_interaction            #添加节点的依赖
     rclcpp
     ai_msgs
+    lighting_control
+    servo_control
 )				
 
 ament_target_dependencies(function_call_control            #添加节点的依赖
     rclcpp
     std_msgs
+    lighting_control
+    servo_control
 )		
 
 install(DIRECTORY
@@ -61,7 +65,7 @@ ${PROJECT_SOURCE_DIR}/launch/
 DESTINATION share/${PROJECT_NAME}/launch)
 
 install(TARGETS
-        gesture_legs_control
+        gesture_interaction
         DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS

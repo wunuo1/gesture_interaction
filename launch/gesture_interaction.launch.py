@@ -24,8 +24,8 @@ from ament_index_python import get_package_share_directory
 
 def generate_launch_description():
     gesture_control_node = Node(
-        package='gesture_legs_control',
-        executable='gesture_legs_control',
+        package='gesture_interaction',
+        executable='gesture_interaction',
         output='screen',
         parameters=[
             {"need_exchange": True}

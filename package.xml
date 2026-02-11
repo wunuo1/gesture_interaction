@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>gesture_legs_control</name>
+  <name>gesture_interaction</name>
   <version>1.0.0</version>
-  <description>gesture_legs_control</description>
+  <description>gesture_interaction</description>
   <maintainer email="847005649@qq.com">nuo.wu</maintainer>
   <license>Apache License 2.0</license>
 
@@ -13,6 +13,7 @@
   <depend>rclcpp</depend>
   <depend>ai_msgs</depend>
   <depend>lighting_control</depend>
+  <depend>servo_control</depend>
 
   <exec_depend>hand_gesture_detection</exec_depend>
 
